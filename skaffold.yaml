@@ -1,0 +1,58 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
+build: 
+  local:
+    push: true
+  artifacts: 
+    - image: iamritwik/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual: 
+          - src: 'src/**/*.js'
+            dest: .
+    - image: iamritwik/comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual: 
+          - src: '*.js'
+            dest: .
+    - image: iamritwik/event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual: 
+          - src: '*.js'
+            dest: .
+    - image: iamritwik/moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual: 
+          - src: '*.js'
+            dest: .
+    - image: iamritwik/posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual: 
+          - src: '*.js'
+            dest: .
+    - image: iamritwik/query
+      context: query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual: 
+          - src: '*.js'
+            dest: .
+    
